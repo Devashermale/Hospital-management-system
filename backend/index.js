@@ -7,13 +7,30 @@ const mongoose = require('mongoose')
 const doctorroute = require('./route/doctorroute')
 const records = require('./route/patientrecordroute')
 const patientsign = require('./route/patientsignroute')
-const patientreg = require('./route/patientregroute')
+const doctorappoint = require('./route/docappointroute') 
+const drreg = require('./route/drregroute')
+const billing = require('./route/billingroute')
+const bedroute = require('./route/bedroute')
 
 app.use(express.json())
-app.use('/api/doctorsign',doctorroute)
-app.use('/api/patientrecord',records)
-app.use('/api/patientsign',patientsign)
-app.use('/api/patientreg',patientreg)
+
+//patient
+app.use('/api/patientsign',patientsign) //patientsignroute is used for patientsign route   ok
+
+//doctor
+ app.use('/api/doctorsign',doctorroute) //presently doctorroute is used for doctorsign route ok 
+app.use('/api/doctorappoint',doctorappoint) //doctorappointroute is used for doctorappoint route //receptionist(verify or status) or admin(status) and patient (create)  ok
+app.use('/api/patientrecord',records)//patientrecordroute is used for patientrecord route  //pharma (lab reports or records) ok
+
+
+//admin 
+app.use('/api/doctorreg',drreg)// ok 
+
+//bill
+app.use('/api/billing',billing) //reception  ok 
+
+//bed 
+app.use('/api/bed',bedroute)// not tested 
 
 port = process.env.PORT 
 mongodb =process.env.MONGO_URL

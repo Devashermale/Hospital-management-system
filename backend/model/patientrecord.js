@@ -13,7 +13,7 @@ const patientrespondSchema = mongoose.Schema({
     type:String,
     required:true
     },
-    medicalhistory:{
+    dieases:{
         type:String,
        required:true
     },

@@ -35,8 +35,9 @@ const patientrecordpost = async (req ,res) => {
 }
 const patientrecordput = async (req,res) => {
     const {id} = req.params
+    const {name ,email , notes , medicalhistory, gender} =req.body
     try {
-        const patient = await patientrecord.findByIdAndUpdate(id)
+        const patient = await patientrecord.findByIdAndUpdate(id,{name ,email , notes , medicalhistory, gender},{new:true})
          res.status(200).json(patient)
     } catch (error) {
          res.status(500).json({
