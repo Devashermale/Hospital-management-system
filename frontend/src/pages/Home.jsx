@@ -4,6 +4,7 @@ import Aiguidancebot from '../components/Aiguidancebot'
 function Home() {
   return (
     <div>
+      
         <Aiguidancebot/>
     </div>
   )
