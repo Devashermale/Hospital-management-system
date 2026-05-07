@@ -4,8 +4,6 @@ const doctorappointschema = new mongoose.Schema({
 
     userid:{
         type:Number,
-        required:true,
-        default:Math.floor(Math.random() * 1000000) + 1
     },
   name: {
     type: String,

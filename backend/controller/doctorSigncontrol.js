@@ -35,37 +35,12 @@ const doctorsignpost = async (req ,res) => {
         })
      }
 }
-const doctorsignput = async (req ,res) => {
-    const {id } = req.params
-    try {
-        const doctor = await Doctorsign.findByIdAndUpdate(id,req.body,{new:true})
-        res.status(200).json(doctor)    
-    
-    } catch (error) {
-        res.status(500).json({
-            error:error.message
-        })  
-    }
-    
-}
-const doctorsigndelete = async (req ,res) => {
-    const {id } = req.params        
-
-    try {
-        const doctor = await Doctorsign.findByIdAndDelete(id)
-        res.status(200).json(doctor)        
-    } catch (error) {
-        res.status(500).json({
-            error:error.message
-        })        
-    }   
+   
 
    
-}
+
 module.exports = {
         Signdoctorall,
         doctorsignid,   
         doctorsignpost,
-        doctorsignput,
-        doctorsigndelete
     }
