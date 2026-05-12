@@ -7,8 +7,9 @@ function useDoctor() {
             const res = axios.post('',{
                 
             })
+            return res.data
         } catch (error) {
-            
+            console.error('Error fetching doctor data:', error);
         }
     }
   return 

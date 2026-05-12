@@ -3,7 +3,7 @@ import Aiguidancebot from '../components/Aiguidancebot'
 
 function Home() {
   return (
-    <div>
+    <div className=' h-screen'>
       
         <Aiguidancebot/>
     </div>

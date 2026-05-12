@@ -1,19 +1,22 @@
+import axios from "axios";
 import React from "react";
 
 function usePatient() {
-  const Patient = async (name, email, dieases, gender, note) => {
+  const patient = async (name, email, dieases, gender, note) => {
     try {
-      const res = axios.post("", {
+      const res = await axios.post("", {
         name: name,
         email: email,
         gender: gender,
         dieases: dieases,
         note: note,
       });
+      return res.data
     } catch (error) {
       console.log(error);
     }
   };
+  return {patient}
 }
 
 export default usePatient;

@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const cors = require('cors')
 const app = express()
  dotenv.config()
 
@@ -7,19 +8,18 @@ const mongoose = require('mongoose')
 const doctorroute = require('./route/doctorroute')
 const records = require('./route/patientrecordroute')
 const patientsign = require('./route/patientsignroute')
-const doctorappoint = require('./route/docappointroute') 
 const drreg = require('./route/drregroute')
 const billing = require('./route/billingroute')
 const bedroute = require('./route/bedroute')
+const botroute = require('./route/bot') 
 
 app.use(express.json())
-
+app.use(cors()) // Enable CORS for all routes
 //patient
 app.use('/api/patientsign',patientsign) //patientsignroute is used for patientsign route   ok
 
 //doctor
  app.use('/api/doctorsign',doctorroute) //presently doctorroute is used for doctorsign route ok 
-app.use('/api/doctorappoint',doctorappoint) //doctorappointroute is used for doctorappoint route //receptionist(verify or status) or admin(status) and patient (create)  ok
 app.use('/api/patientrecord',records)//patientrecordroute is used for patientrecord route  //pharma (lab reports or records) ok
 
 
@@ -31,6 +31,7 @@ app.use('/api/billing',billing) //reception  ok
 
 //bed 
 app.use('/api/bed',bedroute)// not tested 
+app.use('/api/bot',botroute) // chatbot route
 
 port = process.env.PORT 
 mongodb =process.env.MONGO_URL
