@@ -1,16 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function AdminSidebar() {
   return (
-    <div>
-        analytics 
-        drreg 
-        dr avalability 
-        patient details  
+    <div className=' flex items-center justify-center gap-7'>
+       
         <Link to="/analytics">Analytics</Link>
         <Link to="/drreg">Doctor Registration</Link>
-        <Link to="/dravailability">Doctor Availability</Link>
-        <Link to="/patientdetails">Patient Details</Link>
+        <Link to="/doctor-details">Doctor Details</Link>
+        <Link to="/patient-details">Patient Details</Link>
     </div>
   )
 }

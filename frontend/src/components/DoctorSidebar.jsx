@@ -1,16 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function DoctorSidebar() {
   return (
-    <div>
-        patient reg
-        Appointment details 
-     patient details 
-     avalability 
-     <Link to="/patient-reg">Patient Registration</Link>
-      <Link to="/appointment-details">Appointment Details</Link>
-      <Link to="/patient-details">Patient Details</Link>
-      <Link to="/availability">Availability</Link>
+    <div className=' flex items-center justify-center gap-4 bg-gray-800 text-white p-4  '>
+      <Link to="/doctordash">Home</Link>
+     <Link to="/patientreg">Patient Registration</Link>
+    <Link to="/patient-details">Patient Details</Link>
     </div>
   )
 }
