@@ -4,7 +4,7 @@ import React from "react";
 function usePatient() {
   const patient = async (name, email, dieases, gender, note) => {
     try {
-      const res = await axios.post("", {
+      const res = await axios.post("http://localhost:5000/api/patientrecord/patient", {
         name: name,
         email: email,
         gender: gender,

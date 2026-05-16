@@ -5,7 +5,6 @@ function Home() {
   return (
     <div className=' h-screen'>
       
-        <Aiguidancebot/>
     </div>
   )
 }

@@ -1,81 +1,104 @@
-// src/components/Chatbot.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Chatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const userId = "user123"; 
+const Aiguidancebot = ({ onNewAppointment }) => {
+    const [step, setStep] = useState(0);
+    const [messages, setMessages] = useState([
+        { sender: 'bot', text: 'Hello! Welcome to MedCare Hospital. Would you like to book an appointment? (Type "yes" or "book")' }
+    ]);
+    const [formData, setFormData] = useState({
+        name: '', disease: '', address: '', gender: '', department: ''
+    });
+    const [inputValue, setInputValue] = useState('');
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+    const steps = [
+        { key: 'greet', prompt: 'Great! Let\'s get started. What is the Patient\'s full name?' },
+        { key: 'name', prompt: 'What symptoms or disease are you visiting for?' },
+        { key: 'disease', prompt: 'Please provide your current residential address.' },
+        { key: 'address', prompt: 'What is your gender? (Male/Female/Other)' },
+        { key: 'gender', prompt: 'Which department or doctor do you wish to visit? (e.g., Cardiology, General Medicine)' },
+        { key: 'confirm', prompt: 'Thank you! Your information has been recorded.' }
+    ];
 
-    const userMessage = { text: input, sender: 'user' };
-    setMessages([...messages, userMessage]);
-    setInput(''); // Clear input immediately for better UX
+    const handleSend = async () => {
+        if (!inputValue.trim()) return;
 
-    try {
-      const { data } = await axios.post('http://localhost:5000/api/bot/message', { 
-        text: input, 
-        userId 
-      });
-      setMessages(prev => [...prev, { text: data.message, sender: 'bot' }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { text: "Error connecting to server.", sender: 'bot' }, { text: error.message, sender: 'bot' }]);
-    }
-  };
+        const userMsg = { sender: 'user', text: inputValue };
+        setMessages(prev => [...prev, userMsg]);
+        const currentInput = inputValue;
+        setInputValue('');
 
-  return (
-    <div style={{ 
-      position: 'fixed', 
-      bottom: '20px', 
-      right: '20px', 
-      zIndex: 1000,
-      backgroundColor: 'white',
-      border: '1px solid #ccc', 
-      borderRadius: '15px',
-      boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-      padding: '20px', 
-      width: '350px' 
-    }}>
-      <h1 className='font-bold text-2xl text-center mb-4'>Hospital Chatbot</h1>
-      <hr className='mb-4' />
-      
-      <div style={{ height: '300px', overflowY: 'auto', marginBottom: '10px', paddingRight: '5px' }}>
-        {messages.map((msg, i) => (
-          <div key={i} style={{ textAlign: msg.sender === 'user' ? 'right' : 'left', margin: '5px 0' }}>
-            <p style={{ 
-              background: msg.sender === 'user' ? '#007bff' : '#f1f1f1', 
-              color: msg.sender === 'user' ? 'white' : 'black', 
-              display: 'inline-block', 
-              padding: '8px 12px', 
-              borderRadius: '15px',
-              maxWidth: '80%',
-              wordWrap: 'break-word'
+        if (step === 0) {
+            if (currentInput.toLowerCase().includes('yes') || currentInput.toLowerCase().includes('book')) {
+                setMessages(prev => [...prev, { sender: 'bot', text: steps[0].prompt }]);
+                setStep(1);
+            } else {
+                setMessages(prev => [...prev, { sender: 'bot', text: 'I didn\'t quite catch that. Type "yes" to book an appointment.' }]);
+            }
+            return;
+        }
+
+        const currentStepKey = steps[step - 1].key;
+        const updatedFields = { ...formData, [currentStepKey]: currentInput };
+        setFormData(updatedFields);
+
+        if (step < 5) {
+            setMessages(prev => [...prev, { sender: 'bot', text: steps[step].prompt }]);
+            setStep(prev => prev + 1);
+        } else if (step === 5) {
+            try {
+                const finalData = { ...updatedFields, department: currentInput };
+                await axios.post('http://localhost:5000/api/bot/appointment', finalData);
+                
+                setMessages(prev => [...prev, { sender: 'bot', text: 'Appointment booked successfully! Your doctor has been notified.' }]);
+                setStep(6);
+                
+                if (onNewAppointment) onNewAppointment();
+            } catch (error) {
+                setMessages(prev => [...prev, { sender: 'bot', text: 'Error saving appointment. Please try again.' }, { sender: 'bot', text: error.message }]);
+            }
+        }
+    };
+
+    return (
+        /* --- Wrapper Container to Center the Bot --- */
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#f5f7fb', // Optional soft background color
+            boxSizing: 'border-box'
+        }}>
+            {/* --- Chatbot Box --- */}
+            <div style={{ 
+                border: '1px solid #ccc', 
+                padding: '20px', 
+                borderRadius: '8px', 
+                width: '350px',
+                backgroundColor: '#ffffff', // Ensures the box stays white against backgrounds
+                boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' // Optional drop shadow for UI pop
             }}>
-              {msg.text}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ display: 'flex', gap: '5px' }}>
-        <input 
-          style={{ flex: 1, padding: '8px', borderRadius: '5px', border: '1px solid #ddd' }}
-          value={input} 
-          onChange={(e) => setInput(e.target.value)} 
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-          placeholder="Type a message..."
-        />
-        <button 
-          onClick={sendMessage}
-          style={{ padding: '8px 15px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-        >
-          Send
-        </button>
-      </div>
-    </div>
-  );
+                <h3>MedBot 🏥</h3>
+                <div style={{ height: '300px', overflowY: 'scroll', borderBottom: '1px solid #eee', marginBottom: '10px' }}>
+                    {messages.map((msg, index) => (
+                        <div key={index} style={{ textAlign: msg.sender === 'bot' ? 'left' : 'right', margin: '5px' }}>
+                            <span style={{ background: msg.sender === 'bot' ? '#f0f0f0' : '#007bff', color: msg.sender === 'bot' ? '#000' : '#fff', padding: '6px 10px', borderRadius: '10px', display: 'inline-block' }}>
+                                {msg.text}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+                {step <= 5 && (
+                    <div style={{ display: 'flex' }}>
+                        <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} style={{ flex: 1, padding: '5px' }} placeholder="Type your response..." />
+                        <button onClick={handleSend} style={{ marginLeft: '5px' }}>Send</button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
-export default Chatbot;
+export default Aiguidancebot;

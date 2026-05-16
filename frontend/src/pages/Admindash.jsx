@@ -1,11 +1,15 @@
-import React from 'react'
-import AdminSidebar from '../components/AdminSidebar'
+import AdminSidebar from '../components/AdminSidebar';
+import Analytics from '../components/Analytics';
+
 function Admindash() {
-  return (
-    <div>
-      <AdminSidebar />
-    </div>
-  )
+ 
+  <Analytics/>
+    return (
+        <div>
+            <AdminSidebar/>
+            <Analytics/>
+        </div>
+    )
 }
 
-export default Admindash
+export default Admindash;
