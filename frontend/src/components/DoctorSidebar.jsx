@@ -46,10 +46,14 @@ function DoctorSidebar() {
         <div>
           <p className='text-xs font-semibold text-gray-200'>Dr. Devidas</p>
           <p className='text-[10px] text-gray-400'>Medical Admin</p>
+          <button className='mt-1 bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm font-medium transition-colors duration-150'>
+            Log out
+          </button>
         </div>
       </div>
     </div>
   )
 }
+      
 
 export default DoctorSidebar;

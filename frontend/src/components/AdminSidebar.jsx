@@ -69,9 +69,15 @@ function AdminSidebar() {
         <div className="truncate">
           <p className="text-xs font-semibold text-slate-200 truncate">System Administrator</p>
           <span className="text-[10px] text-emerald-500 font-medium flex items-center gap-1">
-            <span className="w-1 h-1 bg-emerald-500 rounded-full inline-block animate-pulse"></span>
+            <span className="w-1 h-1 bg-emerald-500 rounded-full inline-block animate-pulse">
+           
+            </span> 
+            
             Secure Session
-          </span>
+          </span> 
+           <button className='bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-sm font-medium transition-colors duration-150'>
+              Log out
+            </button>
         </div>
       </div>
 
