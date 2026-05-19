@@ -5,6 +5,7 @@ function Patientdash() {
   return (
     <div>
         <Sidebar/>
+        
     </div>
   )
 }

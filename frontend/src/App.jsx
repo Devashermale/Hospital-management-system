@@ -10,6 +10,8 @@ import Patientdash from './pages/Patientdash';
 import DoctorDash from './pages/DoctorDash'
 import AdminDash from './pages/AdminDash'
 import Aiguidancebot from './components/Aiguidancebot';
+import AdminLogin from './components/AdminLogin';
+import PatientLogin from './components/PatientLogin';
 import { useState } from 'react'
 function App() {
   const [refresh, setRefresh] = useState(false);
@@ -22,12 +24,15 @@ function App() {
    
     <Routes>
       <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>} />
+      <Route path='/admin-login' element={<AdminLogin/>} />
+      <Route path='/patient-login' element={<PatientLogin/>} />
       <Route path='/patientdash' element={<Patientdash/>}/>
       <Route path='/doctordash' element={<DoctorDash/>}/>
       <Route path='/drreg' element={<Doctorreg/>}/>
       <Route path='/appointment' element={<Aiguidancebot onNewAppointment={triggerRefresh}/>}/>
       <Route path='/patientreg' element ={<PatientReg/>}/>
-      <Route path='/login' element={<Login/>} />
+  
 
       <Route path='/patient-details' element={<Patientdetails refreshTrigger={refresh} />}/>
       <Route path='/doctor-details' element ={<Doctordetails/>}/> 
