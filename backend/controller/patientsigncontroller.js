@@ -12,22 +12,11 @@ const getallpatientsign = async (req ,res) => {
          )
     }
 }
-const patientsignbyid = async (req,res) => {
-    const {id} =req.params
-    try {
-        const patientsign = await patientsigndata.findById(id)
-        res.status(200).json(patientsign)
-    } catch (error) {
-         res.status(404).json({
-            error:error.message
-         }
-         )
-    }
-}
-const patientsignpost = async (req ,res) => {
+
+const patientsignup = async (req ,res) => {
     const {email, password} = req.body
     try {
-        const patientsign = await patientsigndata.create({email, password})
+        const patientsign = await patientsigndata.patientsignup(email, password)
         res.status(200).json(patientsign)
     } catch (error) {
           res.status(404).json({
@@ -36,34 +25,21 @@ const patientsignpost = async (req ,res) => {
          )
     }
 }
-const patientsignput = async (req,res) => {
-    const {id} = req.params
-    const {email, password} = req.body
+
+const patientlogin = async (req,res) => {
+    const {email,password} = req.body
     try {
-        const patientsign = await patientsigndata.findByIdAndUpdate(id,{email, password},{new:true})
+        const patientsign = await patientsigndata.patientlogin(email,password)
         res.status(200).json(patientsign)
-    } catch (error) {
-         res.status(404).json({
+    }catch (error) {
+        res.status(500).json({
             error:error.message
-         }) 
-    }
-}
-const patientsigndelete = async (req,res) => {
-    const {id} = req.params
-    try {
-    const patientsign = await patientsigndata.findByIdAndDelete(id)
-    res.status(200).json(patientsign)    
-    } catch (error) {
-    res.status(404).json({
-    error:error.message
-    }) 
+        })
     }
 }
 module.exports = {
     getallpatientsign,
-    patientsignbyid,
-    patientsignpost,
-    patientsignput,
-    patientsigndelete
+    patientsignup,
+    patientlogin
 
 }

@@ -30,4 +30,3 @@ const regpageSchema = mongoose.Schema({
 
 const regpage = mongoose.model('reg',regpageSchema)
 
-module.exports = regpage

@@ -66,10 +66,22 @@
         })
     }   
 }
+const patientlogin = async (req,res) => {
+    const {email,password} = req.body
+    try {
+        const patientregistration = await patientreg.findone({email,password})
+        res.status(200).json(patientregistration)
+    } catch (error) {
+        res.status(404).json({
+            error:error.message
+        })
+    }
+}
 module.exports = {
     patientregall,
     patientregbyid, 
     patientregcreate,
     patientregupdate,
-    patientregdelete
+    patientregdelete,
+    patientlogin
 }   

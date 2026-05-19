@@ -1,20 +1,19 @@
 import axios from 'axios'
 import React from 'react'
 
-function useLogin() {
-  const login = async (email,password) =>{
+function useDoctorlogin() {
+ const doctorlogin = async (email,password) =>{
     try {
-      const response = await axios.post('http://localhost:5000/api/patient/login',{
+      const response = await axios.post('http://localhost:5000/api/doctor/login',{
         email,password
       })
       console.log(response.data)
       return response.data;
-
     } catch (error) {
       console.log(error)
       throw error;
     }
-  }
-  return {login}
+}   
+ return {doctorlogin}
 }
-export default useLogin
+export default useDoctorlogin

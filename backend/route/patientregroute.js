@@ -6,7 +6,8 @@ router.get('/patientreg',patientregall)
 router.get('/patientreg/:id',patientregbyid)
 router.post('/patientreg',patientregcreate)
 router.put('/patientreg/:id',patientregupdate)
-router.delete('/patientreg/:id',patientregdelete)   
+router.delete('/patientreg/:id',patientregdelete)
+   
 module.exports = router
 
     

@@ -1,20 +1,20 @@
 import axios from 'axios'
 import React from 'react'
 
-function useLogin() {
-  const login = async (email,password) =>{
+function useAdmin() {
+  const adminlogin = async (email,password) =>{
     try {
-      const response = await axios.post('http://localhost:5000/api/patient/login',{
+      const response = await axios.post('http://localhost:5000/api/admin/login',{
         email,password
       })
       console.log(response.data)
       return response.data;
-
     } catch (error) {
       console.log(error)
       throw error;
     }
-  }
-  return {login}
+    }
+    return {adminlogin}
 }
-export default useLogin
+
+export default useAdmin

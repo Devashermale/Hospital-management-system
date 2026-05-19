@@ -13,21 +13,11 @@ const Signdoctorall = async (req, res) => {
         })
     }
 }
-const doctorsignid = async (req ,res) => {
-    const {id} = req.params
-    try {
-        const doctor = await Doctorsign.findById(id)
-        res.status(200).json(doctor)
-    } catch (error) {
-        res.status(500).json({
-            error:error.message
-        })
-    }
-}
-const doctorsignpost = async (req ,res) => {
+
+const doctorsignup = async (req ,res) => {
      const {email , password} = req.body
      try {
-        const doctor = await Doctorsign.create({email,password})
+        const doctor = await Doctorsign.doctorsignup(email, password)
         res.status(201).json(doctor)
      } catch (error) {
         res.status(500).json({
@@ -35,12 +25,23 @@ const doctorsignpost = async (req ,res) => {
         })
      }
 }
+const doctorlogin = async (req,res) => {
+    const {email,password} = req.body
+    try {
+        const doctor = await Doctorsign.doctorlogin(email,password)
+        res.status(200).json(doctor)
+    }catch (error) {
+        res.status(500).json({
+            error:error.message
+        })
+    }
+}
    
 
    
 
 module.exports = {
         Signdoctorall,
-        doctorsignid,   
-        doctorsignpost,
+        doctorsignup,
+        doctorlogin
     }
